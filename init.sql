@@ -15,20 +15,20 @@
 --------------------------------------------------------------------------------
 
 -- this must be here to avoid logon problems when SQLPATH env variable is unset
-def SQLPATH=""
+def SQLPATH="C:\Oracle\tpt-oracle-fork"
 
 
 -- set SQLPATH variable to either Unix or Windows format
 
-def SQLPATH=$SQLPATH -- (Unix/Mac OSX)
---def SQLPATH=%SQLPATH% -- (Windows)
+--def SQLPATH=$SQLPATH -- (Unix/Mac OSX)
+def SQLPATH=%SQLPATH% -- (Windows)
 
--- def _start=start    -- Windows
+def _start=start    -- Windows
 -- def _start=xdg-open -- Unix/Linux
-def _start=open        -- MacOS
+--def _start=open        -- MacOS
 
-def _delete="rm -f" -- Unix/MacOSX
--- def _delete="del" -- Windows
+--def _delete="rm -f" -- Unix/MacOSX
+def _delete="del" -- Windows
 
 def _tpt_tempdir=&SQLPATH/tmp
 
@@ -46,6 +46,8 @@ def _tpt_tempdir=&SQLPATH/tmp
   define    1min="sysdate-1/24/60 sysdate"
   define  minute="sysdate-1/24/60 sysdate"
   define    5min="sysdate-1/24/12 sysdate"
+  define    10min="sysdate-1/24/6 sysdate"
+  define    15min="sysdate-1/24/4 sysdate"
   define    hour="sysdate-1/24 sysdate"
   define   1hour="sysdate-1/24 sysdate"
   define   2hours="sysdate-1/12 sysdate"
@@ -79,7 +81,7 @@ def _tpt_tempdir=&SQLPATH/tmp
 -- 
 -- setting from 500 to 100 as otherwise snapper/dbms_output starts getting ORA-6502 errors due to 32k fetch limit of dbms_output
 
-  set arraysize 100
+  set arraysize 500
 
 -- normally I keep this commented out, otherwise
 -- a DBMS_OUTPUT.GET_LINES call is made after all
@@ -146,10 +148,10 @@ def _tpt_tempdir=&SQLPATH/tmp
 
 -- include username and connect identifier in prompt
 
---  column pr new_value _pr
---  select initcap('&_user@&_connect_identifier> ') pr from dual;
---  set sqlprompt "&_pr"
---  column _pr clear
+  column pr new_value _pr
+  select initcap('&_user@&_connect_identifier> ') pr from dual;
+  set sqlprompt "&_pr"
+  column _pr clear
 
 
 -- format some more columns for common DBA queries

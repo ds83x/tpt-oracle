@@ -44,6 +44,6 @@ ORDER BY
 
 PROMPT
 
-@ash/w &1
+@ash\w &1
 
 
